@@ -10,13 +10,13 @@ As pastas possem o nome do provedor do curso + a categoria + o nome do curso.
 
 ## Livros
 
-- [ ] Kubernetes: tudo sobre orquestração de containeres
+- [ ] Kubernetes: tudo sobre orquestração de containeres - STUDING
 
 ## Pluralsight
 
 #### frontend
 
-- [ ] JavaScript Core Language - 2/10
+- [ ] JavaScript Core Language
 - [ ] TypeScript Core Language
 - [ ] Webpack 1 Fundamentals
 - [ ] React - 0%
@@ -28,7 +28,7 @@ As pastas possem o nome do provedor do curso + a categoria + o nome do curso.
 - [ ] C# Application Practices
 - [ ] C# Coding Practices
 - [ ] C# Unit Testing with NUnit
-- [ ] Design Patterns in C#
+- [ ] Design Patterns in C# - STUDING
 - [ ] ASP.NET Core 6 Web API
 - [ ] Using gRPC in ASP.NET Core 5
 - [ ] ASP.NET Core 6 SignalR Fundamentals
