@@ -65,3 +65,4 @@ As pastas possem o nome do provedor do curso + a categoria + o nome do curso.
 #### for-fun
 
 - [ ] Learning COBOL (2015)
+- [ ] Azure Spark Databricks Essential Training
