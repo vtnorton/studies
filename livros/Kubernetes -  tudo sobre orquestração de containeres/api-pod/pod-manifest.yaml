@@ -2,6 +2,10 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: api-pod
+  labels:
+    app: simple-api
+    commit: 982992sse
+    project: estudo
 spec:
   containers:
     - name: simple-api
@@ -14,4 +18,5 @@ spec:
           cpu: 250m
           memory: 256M
       ports:
-        - containerPort: 27017
+        - name: porta-api
+          containerPort: 8083
