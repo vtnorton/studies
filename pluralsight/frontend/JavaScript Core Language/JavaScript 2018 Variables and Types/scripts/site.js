@@ -1,417 +1,370 @@
 class LoanApplication {
-    Id = create_UUID();
-    ApplicantName;
-    ApplicantDateOfBirth;
-    ApplicantAnnualIncome;
-    Factors = [];
-    LoanPurpose;
-    LoanAmount;
+  Id = create_UUID();
+  ApplicantName;
+  ApplicantDateOfBirth;
+  ApplicantAnnualIncome;
+  Factors = [];
+  LoanPurpose;
+  LoanAmount;
 }
 
 function MyFunction() {
+  var x = 10;
 
-    var x = 10;
+  if (true) {
+    var x = "Hello";
+  }
 
-    if (true) {
-        
-        var x = "Hello";
-        
-    }
-
-    // x is "Hello" here
+  // x is "Hello" here
 }
 
 function MyFunction() {
+  var i = 5;
 
-    var i = 5;
+  for (var i = 0; i < 10; i++) {
+    // ...
+  }
 
-    for (var i = 0; i < 10; i++) {
-        // ...
-    }
-
-    // i is 10 here
+  // i is 10 here
 }
 
 var LoanApplicationList = [];
 
 //fires when the page loads
 window.onload = function () {
+  initializeLoans();
 
-    initializeLoans();
-
-    bindLoansToDropDown();
-}
+  bindLoansToDropDown();
+};
 
 function initializeLoans() {
+  var la1 = new LoanApplication();
+  la1.ApplicantName = "Mr. John worker";
+  la1.ApplicantDateOfBirth = new Date(1983, 2, 1);
+  la1.ApplicantAnnualIncome = 48000;
+  la1.Factors = [false, true, true, false];
+  la1.LoanPurpose = "I want to build a new house with the loan";
+  la1.LoanAmount = 150000;
 
-    var la1 = new LoanApplication();
-    la1.ApplicantName = "Mr. John worker";
-    la1.ApplicantDateOfBirth = new Date(1983, 2, 1);
-    la1.ApplicantAnnualIncome = 48000;
-    la1.Factors = [false, true, true, false];
-    la1.LoanPurpose = "I want to build a new house with the loan";
-    la1.LoanAmount = 150000;
+  LoanApplicationList[0] = la1;
 
-    LoanApplicationList[0] = la1;
+  var la2 = new LoanApplication();
+  la2.ApplicantName = "Miss Michelle Smartypants M.D. ";
+  la2.ApplicantDateOfBirth = new Date(1976, 12, 14);
+  la2.ApplicantAnnualIncome = 198050;
+  la2.Factors = [true, true, true, false];
+  la2.LoanPurpose = "My partner needs the loan to buy new equipment for our medical practice";
+  la2.LoanAmount = 4800;
 
-    var la2 = new LoanApplication();
-    la2.ApplicantName = "Miss Michelle Smartypants M.D. ";
-    la2.ApplicantDateOfBirth = new Date(1976, 12, 14);
-    la2.ApplicantAnnualIncome = 198050;
-    la2.Factors = [true, true, true, false];
-    la2.LoanPurpose = "My partner needs the loan to buy new equipment for our medical practice";
-    la2.LoanAmount = 4800;
+  LoanApplicationList[1] = la2;
 
-    LoanApplicationList[1] = la2;
+  var la3 = new LoanApplication();
+  la3.ApplicantName = "Mrs. Debbie Learner";
+  la3.ApplicantDateOfBirth = new Date(1952, 6, 20);
+  la3.ApplicantAnnualIncome = 21000;
+  la3.Factors = [true, true, true, true];
+  la3.LoanPurpose = "Go on a cruise holiday";
+  la3.LoanAmount = 6000;
 
-    var la3 = new LoanApplication();
-    la3.ApplicantName = "Mrs. Debbie Learner";
-    la3.ApplicantDateOfBirth = new Date(1952, 6, 20);
-    la3.ApplicantAnnualIncome = 21000;
-    la3.Factors = [true, true, true, true];
-    la3.LoanPurpose = "Go on a cruise holiday";
-    la3.LoanAmount = 6000;
-
-    LoanApplicationList[2] = la3;
+  LoanApplicationList[2] = la3;
 }
 
 function create_UUID() {
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (dt + Math.random() * 16) % 16 | 0;
-        dt = Math.floor(dt / 16);
-        return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return uuid;
+  var dt = new Date().getTime();
+  const uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (dt + Math.random() * 16) % 16 | 0;
+    dt = Math.floor(dt / 16);
+    return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+  });
+  return uuid;
 }
 
 function bindLoansToDropDown() {
+  var dropDown = document.getElementById("loanApplications");
 
-    var dropDown = document.getElementById("loanApplications");
+  dropDown.options.length = 0;
 
-    dropDown.options.length = 0;
+  var el = document.createElement("option");
+  el.textContent = "...Select an application...";
+  dropDown.appendChild(el);
 
-    var el = document.createElement("option");
-    el.textContent = "...Select an application...";
+  for (var i = 0; i < LoanApplicationList.length; i++) {
+    let la = LoanApplicationList[i];
+
+    let el = document.createElement("option");
+    el.textContent = "Application of " + la.ApplicantName;
+    el.value = la.Id.toString();
     dropDown.appendChild(el);
-
-
-    for (var i = 0; i < LoanApplicationList.length; i++) {
-        var la = LoanApplicationList[i];
-
-        var el = document.createElement("option");
-        el.textContent = "Application of " + la.ApplicantName;
-        el.value = la.Id.toString();
-        dropDown.appendChild(el);
-    }
+  }
 }
 
 function loadApplication() {
+  var dropDown = document.getElementById("loanApplications");
 
-    var dropDown = document.getElementById("loanApplications");
+  var la = findLoanApplicationByName(dropDown.value);
 
-    var la = findLoanApplicationByName(dropDown.value);
+  if (la != undefined) {
+    var [isEmployed, hasKids = true, hasLoans, hasCreditcards, ...moreArgs] = la.Factors;
+    var { Id, ApplicantName = "Barry" } = la;
 
-    if (la != undefined) {
+    document.getElementById("inputName").value = la.ApplicantName;
+    document.getElementById("inputDoBMonth").value = la.ApplicantDateOfBirth.getMonth() + 1;
+    document.getElementById("inputDoBDay").value = la.ApplicantDateOfBirth.getDate();
+    document.getElementById("inputDoBYear").value = la.ApplicantDateOfBirth.getFullYear();
+    document.getElementById("inputAnnualIncome").value = la.ApplicantAnnualIncome;
+    document.getElementById("inputAnnualIncome").value = la.ApplicantAnnualIncome;
+    document.getElementById("IsEmployed").checked = isEmployed;
+    document.getElementById("HasKids").checked = hasKids;
+    document.getElementById("HasLoans").checked = hasLoans;
+    document.getElementById("HasCreditcards").checked = hasCreditcards;
+    document.getElementById("inputLoanPurpose").value = la.LoanPurpose;
+    document.getElementById("inputLoanAmount").value = la.LoanAmount;
 
-        var isEmployed = la.Factors[0];
-        var hasKids = la.Factors[1];
-        var hasLoans = la.Factors[2];
-        var hasCreditcards = la.Factors[3];
-
-
-        document.getElementById("inputName").value = la.ApplicantName;
-        document.getElementById("inputDoBMonth").value = la.ApplicantDateOfBirth.getMonth() + 1;
-        document.getElementById("inputDoBDay").value = la.ApplicantDateOfBirth.getDate();
-        document.getElementById("inputDoBYear").value = la.ApplicantDateOfBirth.getFullYear();
-        document.getElementById("inputAnnualIncome").value = la.ApplicantAnnualIncome;
-        document.getElementById("inputAnnualIncome").value = la.ApplicantAnnualIncome;
-        document.getElementById("IsEmployed").checked = isEmployed;
-        document.getElementById("HasKids").checked = hasKids;
-        document.getElementById("HasLoans").checked = hasLoans;
-        document.getElementById("HasCreditcards").checked = hasCreditcards;
-        document.getElementById("inputLoanPurpose").value = la.LoanPurpose;
-        document.getElementById("inputLoanAmount").value = la.LoanAmount;
-
-        var riskLabel = document.getElementById("riskSummary");
-        riskLabel.style.display = "block";
-        riskLabel.innerHTML = generateRickProfile(la);
-
-    }
+    var riskLabel = document.getElementById("riskSummary");
+    riskLabel.style.display = "block";
+    riskLabel.innerHTML = generateRickProfile(la);
+  }
 }
 
 function findLoanApplicationByName(name) {
-    for (var i = 0; i < LoanApplicationList.length; i += 1) {
-        if (LoanApplicationList[i]["Id"] === name) {
-            return LoanApplicationList[i];
-        }
+  for (var i = 0; i < LoanApplicationList.length; i += 1) {
+    if (LoanApplicationList[i]["Id"] === name) {
+      return LoanApplicationList[i];
     }
-    return undefined;
+  }
+  return undefined;
 }
 
 function saveApplication() {
+  if (validateApplication()) {
+    var riskLabel = document.getElementById("riskSummary");
+    riskLabel.style.display = "block";
+    riskLabel.innerHTML = generateRickProfile(la);
 
-    if (validateApplication()) {
+    var newLa = getLoanApplicationDataFromInputs();
 
-        var riskLabel = document.getElementById("riskSummary");
-        riskLabel.style.display = "block";
-        riskLabel.innerHTML = generateRickProfile(la);
+    LoanApplicationList.push(newLa);
 
-        var newLa = getLoanApplicationDataFromInputs();
-
-        LoanApplicationList.push(newLa);
-
-        bindLoansToDropDown();
-
-    } else {
-        document.getElementById("riskSummary").style.display = "none";
-    }
+    bindLoansToDropDown();
+  } else {
+    document.getElementById("riskSummary").style.display = "none";
+  }
 }
 
 function clearApplication() {
-    document.getElementById("inputName").value = "";
-    document.getElementById("inputDoBMonth").value = "";
-    document.getElementById("inputDoBDay").value = "";
-    document.getElementById("inputDoBYear").value = "";
-    document.getElementById("inputAnnualIncome").value = "";
-    document.getElementById("IsEmployed").checked = false;
-    document.getElementById("HasKids").checked = false;
-    document.getElementById("HasLoans").checked = false;
-    document.getElementById("HasCreditcards").checked = false;
-    document.getElementById("inputLoanPurpose").value = "";
-    document.getElementById("inputLoanAmount").value = "";
+  document.getElementById("inputName").value = "";
+  document.getElementById("inputDoBMonth").value = "";
+  document.getElementById("inputDoBDay").value = "";
+  document.getElementById("inputDoBYear").value = "";
+  document.getElementById("inputAnnualIncome").value = "";
+  document.getElementById("IsEmployed").checked = false;
+  document.getElementById("HasKids").checked = false;
+  document.getElementById("HasLoans").checked = false;
+  document.getElementById("HasCreditcards").checked = false;
+  document.getElementById("inputLoanPurpose").value = "";
+  document.getElementById("inputLoanAmount").value = "";
 
-    hideValidators();
+  hideValidators();
 }
 
 function hideValidators() {
-    document.getElementById("inputNameValidation").style.display = "none";
-    document.getElementById("inputDoBValidation").style.display = "none";
-    document.getElementById("inputAnnualIncomeValidation").style.display = "none";
-    document.getElementById("inputLoanPurposeValidation").style.display = "none";
-    document.getElementById("inputLoanAmountValidation").style.display = "none";
-    document.getElementById("riskSummary").style.display = "none";
+  document.getElementById("inputNameValidation").style.display = "none";
+  document.getElementById("inputDoBValidation").style.display = "none";
+  document.getElementById("inputAnnualIncomeValidation").style.display = "none";
+  document.getElementById("inputLoanPurposeValidation").style.display = "none";
+  document.getElementById("inputLoanAmountValidation").style.display = "none";
+  document.getElementById("riskSummary").style.display = "none";
 }
 
 function getLoanApplicationDataFromInputs() {
+  var la = new LoanApplication();
 
-    var la = new LoanApplication();
+  la.ApplicantName = document.getElementById("inputName").value;
 
-    la.ApplicantName = document.getElementById("inputName").value;
+  var month = document.getElementById("inputDoBMonth").value;
+  var day = document.getElementById("inputDoBDay").value;
+  var year = document.getElementById("inputDoBYear").value;
 
-    var month = document.getElementById("inputDoBMonth").value;
-    var day = document.getElementById("inputDoBDay").value;
-    var year = document.getElementById("inputDoBYear").value;
+  var isEmployed = document.getElementById("IsEmployed").checked;
+  var hasKids = document.getElementById("HasKids").checked;
+  var hasLoans = document.getElementById("HasLoans").checked;
+  var hasCreditcards = document.getElementById("HasCreditcards").checked;
 
-    var isEmployed = document.getElementById("IsEmployed").checked;
-    var hasKids = document.getElementById("HasKids").checked;
-    var hasLoans = document.getElementById("HasLoans").checked;
-    var hasCreditcards = document.getElementById("HasCreditcards").checked;
+  la.Factors[0] = isEmployed;
+  la.Factors[1] = hasKids;
+  la.Factors[2] = hasLoans;
+  la.Factors[3] = hasCreditcards;
 
+  if (Number.isInteger(month) && Number.isInteger(day) && Number.isInteger(year)) {
+    la.ApplicantDateOfBirth = new Date(year, month, day);
+  }
 
-    la.Factors[0] = isEmployed;
-    la.Factors[1] = hasKids;
-    la.Factors[2] = hasLoans;
-    la.Factors[3] = hasCreditcards;
+  la.ApplicantAnnualIncome = document.getElementById("inputAnnualIncome").value;
+  la.LoanPurpose = document.getElementById("inputLoanPurpose").value;
+  la.LoanAmount = document.getElementById("inputLoanAmount").value;
 
-    if (month != "" && day != "" && year != "") {
-        la.ApplicantDateOfBirth = new Date(year, month, day);
-    }
-
-    la.ApplicantAnnualIncome = document.getElementById("inputAnnualIncome").value;
-    la.LoanPurpose = document.getElementById("inputLoanPurpose").value;
-    la.LoanAmount = document.getElementById("inputLoanAmount").value;
-
-    return la;
+  return la;
 }
 
 function validateApplication() {
+  var valid = true;
 
-    var valid = true;
+  var la = getLoanApplicationDataFromInputs();
 
-    var la = getLoanApplicationDataFromInputs();
+  if (la.ApplicantName == "") {
+    document.getElementById("inputNameValidation").style.display = "block";
 
-    if (la.ApplicantName == "") {
-        document.getElementById("inputNameValidation")
-            .style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("inputNameValidation").style.display = "none";
+  }
 
-        valid = false;
-    } else {
-        document.getElementById("inputNameValidation")
-            .style.display = "none";
-    }
+  if (la.ApplicantDateOfBirth == undefined) {
+    document.getElementById("inputDoBValidation").style.display = "block";
 
-    if (la.ApplicantDateOfBirth == undefined) {
-        document.getElementById("inputDoBValidation")
-            .style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("inputDoBValidation").style.display = "none";
+  }
 
-        valid = false;
-    } else {
-        document.getElementById("inputDoBValidation")
-            .style.display = "none";
-    }
+  if (la.ApplicantAnnualIncome == "") {
+    document.getElementById("inputAnnualIncomeValidation").style.display = "block";
 
-    if (la.ApplicantAnnualIncome == "") {
-        document.getElementById("inputAnnualIncomeValidation")
-            .style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("inputAnnualIncomeValidation").style.display = "none";
+  }
 
-        valid = false;
-    } else {
-        document.getElementById("inputAnnualIncomeValidation")
-            .style.display = "none";
-    }
+  if (la.LoanPurpose == "") {
+    document.getElementById("inputLoanPurposeValidation").style.display = "block";
 
-    if (la.LoanPurpose == "") {
-        document.getElementById("inputLoanPurposeValidation")
-            .style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("inputLoanPurposeValidation").style.display = "none";
+  }
 
-        valid = false;
-    } else {
-        document.getElementById("inputLoanPurposeValidation")
-            .style.display = "none";
-    }
+  if (la.LoanAmount == "") {
+    document.getElementById("inputLoanAmountValidation").style.display = "block";
 
-    if (la.LoanAmount == "") {
-        document.getElementById("inputLoanAmountValidation")
-            .style.display = "block";
+    valid = false;
+  } else {
+    document.getElementById("inputLoanAmountValidation").style.display = "none";
+  }
 
-        valid = false;
-    } else {
-        document.getElementById("inputLoanAmountValidation")
-            .style.display = "none";
-    }
-
-    return valid;
+  return valid;
 }
 
 function generateRickProfile(la) {
-    var risk = 3;
+  var risk = 3;
 
-    var nameAndTitle = la.ApplicantName;
+  var nameAndTitle = la.ApplicantName.trim().toLoserCase();
 
-    var indexOfMD = nameAndTitle.search("MD");
-    var indexOfMD2 = nameAndTitle.search("M.D");
-    var indexOfMD3 = nameAndTitle.search("M.D.");
-    var indexOfPhD = nameAndTitle.search("PhD");
-    var indexOfPhD2 = nameAndTitle.search("Ph.D");
-    var indexOfPhD3 = nameAndTitle.search("PHD");
-    var indexOfDr = nameAndTitle.search("Dr.");
-    var indexOfDr2 = nameAndTitle.search("DR.");
+  let dr = nameAndTitle.startsWith("dr");
+  let phd = nameAndTitle.startsWith("phd");
+  let phd2 = nameAndTitle.startsWith("ph.d");
+  let md = nameAndTitle.startsWith("md");
+  let md2 = nameAndTitle.startsWith("m.d");
 
-    if (indexOfMD > -1 || indexOfMD2 > -1 || indexOfMD3 > -1
-        || indexOfPhD > -1 || indexOfPhD2 > -1
-        || indexOfPhD3 > -1 || indexOfDr > -1 || indexOfDr2 > -1) {
+  if (dr || phd || phd2 || md || md2) {
+    risk = risk - 1;
+  }
 
-        risk = risk - 1;
-    }
+  var age = new Date().getFullYear() - la.ApplicantDateOfBirth.getFullYear();
 
-    var age = new Date().getFullYear() -
-        la.ApplicantDateOfBirth.getFullYear();
+  if (age > 60) {
+    risk = risk + 2;
+  }
 
-    if (age > 60) {
-        risk = risk + 2;
-    }
+  var loanRatio = la.ApplicantAnnualIncome / la.LoanAmount;
+  if (loanRatio < 1) {
+    risk = risk + 3;
+  }
+  if (loanRatio > 10) {
+    risk = risk + 2;
+  }
+  if (loanRatio > 20) {
+    risk = risk + 1;
+  }
+  if (loanRatio > 30) {
+    risk = risk - 1;
+  }
 
-    var loanRatio = la.ApplicantAnnualIncome / la.LoanAmount;
-    if (loanRatio < 1) {
-        risk = risk + 3;
-    }
-    if (loanRatio > 10) {
-        risk = risk + 2;
-    }
-    if (loanRatio > 20) {
-        risk = risk + 1;
-    }
-    if (loanRatio > 30) {
-        risk = risk - 1;
-    }
+  if (la.Factors[2] == true || la.Factors[3] == true) {
+    //risk increases when the applicant has other
+    //loans or credit cards
+    risk = risk + 1;
+  }
 
-    if (la.Factors[2] == true || la.Factors[3] == true) {
-        //risk increases when the applicant has other 
-        //loans or credit cards
-        risk = risk + 1;
-    }
+  var purpose = la.LoanPurpose.trim().toLowerCase();
 
-    var purpose = la.LoanPurpose;
+  let house = purpose.includes("house");
+  let holiday = purpose.includes("holiday");
+  let vacation = purpose.includes("vacation");
+  let business = purpose.includes("business");
 
-    var indexOfHouse = purpose.search("House");
-    var indexOfHouse2 = purpose.search("house");
-    var indexOfHoliday = purpose.search("Holiday");
-    var indexOfHoliday2 = purpose.search("holiday");
-    var indexOfHoliday3 = purpose.search("vacation");
-    var indexOfHoliday4 = purpose.search("Vacation");
-    var indexOfBusiness = purpose.search("Business");
-    var indexOfBusiness2 = purpose.search("business");
+  if (house) {
+    //the loan will be used for a house or building project
+    risk = risk + 2;
+  }
 
-    if (indexOfHouse > -1 || indexOfHouse2 > -1) {
-        //the loan will be used for a house or building project
-        risk = risk + 2;
-    }
+  if (holiday || vacation) {
+    //the loan will be used for a holiday
+    risk = risk + 3;
+  }
 
-    if (indexOfHoliday > -1 || indexOfHoliday2 > -1
-        || indexOfHoliday3 > -1 || indexOfHoliday4 > -1) {
-        //the loan will be used for a holiday
-        risk = risk + 3;
-    }
+  if (business) {
+    //the loan will be used for a business
+    risk = risk + 1;
+  }
 
-    if (indexOfBusiness > -1 || indexOfBusiness2 > -1) {
-        //the loan will be used for a business
-        risk = risk + 1;
-    }
+  var reviewText = "";
 
+  if (age < 18) {
+    reviewText = "will not be reviewed, because you have to be 18 years or older";
+  } else {
+    reviewText = "will be reviewed";
+  }
 
-    var reviewText = "";
+  var riskProfile = "";
 
-    if (age < 18) {
-        reviewText = "will not be reviewed, because you have to be 18 years or older";
-    } else {
-        reviewText = "will be reviewed";
-    }
+  if (risk < 2) {
+    riskProfile = "very low";
+  } else if (risk < 5) {
+    riskProfile = "low";
+  } else if (risk < 8) {
+    riskProfile = "medium";
+  } else if (risk < 12) {
+    riskProfile = "high";
+  }
 
-    var riskProfile = "";
+  var applicationCode = String.raw`\t${createApplicationId()}`;
 
-    if (risk < 2) {
-        riskProfile = "very low";
-    } else if (risk < 5) {
-        riskProfile = "low";
-    } else if (risk < 8) {
-        riskProfile = "medium";
-    } else if (risk < 12) {
-        riskProfile = "high";
-    }
-
-    var applicationCode = String.raw`\t${createApplicationId()}`;
-
-    var summaryText = foo
-        `Dear ${la.ApplicantName}, <br>
+  var summaryText = foo`Dear ${la.ApplicantName}, <br>
     your application for ${"$" + la.LoanAmount}, ${reviewText}.<br>
     Your risk profile is ${riskProfile}.<br>
     Your unique application code is ${applicationCode}`;
 
-    return summaryText;
+  return summaryText;
 }
 
 function createApplicationId() {
-    var result = '';
-    var characters = 'ABCDEUVYZabcdrswxyz01789/\\#@$%()*^!';
-    var charactersLength = characters.length;
-    for (var i = 0; i < 8; i++) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
+  var result = "";
+  var characters = "ABCDEUVYZabcdrswxyz01789/\\#@$%()*^!";
+  var charactersLength = characters.length;
+  for (var i = 0; i < 8; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
 }
 
 function foo(strings, ...values) {
-    let str = "";
-    for (var i = 0; i < strings.raw.length; i++) {
-        if (i > 0) {
-            str += `<b>${values[i - 1]}</b>`
-        }
-        str += strings.raw[i];
+  let str = "";
+  for (var i = 0; i < strings.raw.length; i++) {
+    if (i > 0) {
+      str += `<b>${values[i - 1]}</b>`;
     }
+    str += strings.raw[i];
+  }
 
-    return str;
+  return str;
 }
-
-
-
