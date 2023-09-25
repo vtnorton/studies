@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-pod-ing
+spec:
+  defaultBackend:
+    service:
+      name: default-http-backend
+      port:
+        number: 80
+  rules:
+    - host: minhaapi.info
+      http:
+        paths:
+          - path: /teste
+            pathType: Prefix
+            backend:
+              service:
+                name: api-pod-service
+                port:
+                  number: 8083
