@@ -15,7 +15,7 @@ function quicksort(arr) {
       }
     }
 
-    //return [...quicksort(menores), privo, ...quicksort[maiores]]
+    //return [...quicksort(menores), pivo, ...quicksort[maiores]]
     return [].concat(quicksort(menores), [pivo], quicksort(maiores));
   }
 }
