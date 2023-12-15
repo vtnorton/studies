@@ -1,0 +1,14 @@
+name: Trigger by webhook
+
+on:
+  repository_dispatch:
+    types: [new-release]
+
+jobs:
+  update:
+    name: Test trigger
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        run: echo "Deu certo"

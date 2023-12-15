@@ -12,6 +12,7 @@ function FilaDePesquisa() {
 
   let fila_de_pesquisa = []; //push, shift
   let visitados = [];
+  console.log(visitados);
   fila_de_pesquisa.push(...grafo["voce"]);
 
   for (let i = 0; i < fila_de_pesquisa.length; i++) {
